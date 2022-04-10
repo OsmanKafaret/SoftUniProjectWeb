@@ -1,0 +1,44 @@
+﻿@model ICollection<ProductListingViewModel>
+
+@{
+    ViewBag.Title = "My Basket";
+}
+
+@{
+    var totalSum = 0m;
+}
+
+@if (Model.Any())
+{
+    <div class="row">
+        @foreach (var item in Model)
+        {
+            <div class="col-md-2">
+                <div class="card mb-4">
+                    <img class="card-img-top" src="@item.ImageUrl" alt="@item.Brand @item.Model">
+                    <div class="card-body text-center">
+                        <h5 class="card-title text-center"> @item.Brand @item.Model</h5>
+                        <div class="price">
+
+
+                            <span class="price" style="color: orangered">@item.Price</span>
+
+                            @{ 
+                                totalSum += item.Price;
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+        <h1>@totalSum лв.</h1>
+
+    </div>
+}
+
+
+
+
+
+
+

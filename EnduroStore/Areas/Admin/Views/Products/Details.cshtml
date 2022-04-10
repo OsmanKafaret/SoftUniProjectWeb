@@ -1,0 +1,41 @@
+﻿@model DetailsViewModel
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<section class="py-5">
+    <div class="container px-4 px-lg-5 my-5">
+        <div class="row gx-4 gx-lg-5 align-items-center">
+            <div class="col-md-6"><img class="card-img-top mb-5 mb-md-0" src="@Model.ImageUrl"/></div>
+            <div class="col-md-6">
+                <h1 class="display-5 fw-bolder">@Model.Brand @Model.Model</h1>
+                <div class="fs-5 mb-5">
+                    <span class="text-decoration-line-through" style="display:none">@Model.Price</span>
+                    <span>@Model.Price лв.</span>
+                </div>
+                <p class="lead">@Model.Description</p>
+                <div class="form-group">
+                    <label asp-for="@Model.Size"></label>
+                    <select asp-for="@Model.Size" class="form-control">
+                        <option selected>S</option>
+                        <option>M</option>
+                        <option>L</option>
+                        <option>XL</option>
+                    </select>
+
+                </div>
+                <div class="d-flex">
+                    @if (Model.IsAvialable == "Yes" && Model.UnitsInStock != 0 && User.Identity.IsAuthenticated)
+                    {
+                        <button class="btn btn-outline-dark flex-shrink-0" type="button">
+                            <i class="bi-cart-fill me-1"></i>
+                            Add to cart
+                        </button>
+                    }
+
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

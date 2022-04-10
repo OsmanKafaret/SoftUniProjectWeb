@@ -1,0 +1,46 @@
+﻿@model IEnumerable<ProductListingViewModel>
+
+@{
+    ViewData["Title"] = "All Products";
+}
+
+<h1 class="text-center">LatestProducts</h1>
+
+
+
+<div class="row">
+
+    @foreach (var item in Model)
+    {
+        <div class="col-md-2">
+            <div class="card mb-4">
+                <img class="card-img-top" src="@item.ImageUrl" alt="@item.Brand @item.Model">
+                <div class="card-body text-center">
+                    <h5 class="card-title text-center"> @item.Brand @item.Model</h5>
+
+
+                    <a asp-controller="Products" asp-action="Details" asp-route-id="@item.Id" asp-route-information="@Model" class="btn btn-primary">View</a>
+                    @if (item.IsAvialable == "Yes" && item.UnitsInStock != 0 && User.Identity.IsAuthenticated)
+                    {
+                        <a class="btn" style="background-color: forestgreen">Buy</a>
+                    }
+
+                    @if (item.IsAvialable == "No" || item.UnitsInStock == 0)
+                    {
+                        <a class="btn" style="background-color: red">Not Avialable</a>
+                    }
+
+                    @if (User.IsInRole("Administrator"))
+                    {
+                        <a asp-controller="Products" asp-action="Edit" asp-route-id="@item.Id" class="btn btn-warning">Edit</a>
+                        <a asp-controller="Products" asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger">Delete</a>
+                    }
+
+
+
+                </div>
+            </div>
+        </div>
+    }
+
+</div>
