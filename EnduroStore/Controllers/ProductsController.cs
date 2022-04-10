@@ -59,13 +59,6 @@ namespace EnduroStore.Controllers
             query.Brands = productBrands;
             query.Products = queryResult.Products;
 
-            foreach (var item in this.db.ShoppingCarts)
-            {
-                this.db.ShoppingCarts.Remove(item);
-
-
-            }
-
             this.db.SaveChanges();
             return View(query);
         }
