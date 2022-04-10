@@ -57,7 +57,7 @@ namespace EnduroStore.Controllers
             var productBrands = this.products.AllBrands("Boots");
 
             query.Brands = productBrands;
-
+            var a = "xaaxax";
             query.Products = queryResult.Products;
 
             foreach (var item in this.db.ShoppingCarts)
