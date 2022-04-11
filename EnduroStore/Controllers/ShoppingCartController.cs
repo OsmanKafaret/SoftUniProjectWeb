@@ -14,12 +14,16 @@ using EnduroStore.Models.ShoppingCart;
 
 namespace EnduroStore.Areas.Admin.Controllers
 {
+    using static WebConstants;
     public class ShoppingCartController : Controller
     {
         private readonly UserManager<User> userManager;
         private readonly SignInManager<User> signInManager;
         private readonly EnduroStoreDbContext db;
         private readonly RoleManager<IdentityRole> roleManager;
+
+
+        public int GlobalMessageKey { get; private set; }
 
         public ShoppingCartController(SignInManager<User> signInManager, UserManager<User> userManager, EnduroStoreDbContext db)
         {
@@ -34,8 +38,7 @@ namespace EnduroStore.Areas.Admin.Controllers
 
             var products = new List<ProductListingViewModel>();
 
-            if(getProducts.Count != 0)
-            {
+           
                 foreach (var item in getProducts)
                 {
                   var product = this.db.Products.Where(x => x.Id == item.ProductId)
@@ -51,11 +54,7 @@ namespace EnduroStore.Areas.Admin.Controllers
                   products.Add(product);
                 }
                 return View(products);
-            }
-
-
-
-            return View();
+           
           
         }
         [Authorize]
@@ -85,18 +84,9 @@ namespace EnduroStore.Areas.Admin.Controllers
         [Authorize]
         public IActionResult Checkout()
         {
-            var totalSum = 0m;
+      
 
-            var userProducs = this.db.ShoppingCarts.Where(x => x.UserId == this.User.Id()).ToList();
-
-            foreach (var item in userProducs)
-            {
-                var product = this.db.Products.Where(x => x.Id == item.ProductId).FirstOrDefault();
-
-                totalSum += product.Price;
-            }
-
-            return View(totalSum);
+            return View();
         }
         [Authorize]
         [HttpPost]
@@ -132,6 +122,8 @@ namespace EnduroStore.Areas.Admin.Controllers
             this.db.ShoppingCarts.RemoveRange(userProducs);
 
             this.db.SaveChanges();
+
+           // TempData[GlobalMessageKey] = "asasa";
 
             return RedirectToAction("Index", "Home");
         }
