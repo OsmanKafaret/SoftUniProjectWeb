@@ -86,7 +86,7 @@ namespace EnduroStore.Areas.Admin.Controllers
 
             var deleted = this.db.ShoppingCarts.Where(x => x.Id == shopItem).FirstOrDefault();
 
-          
+            var somet = "sasas";
 
            this.db.ShoppingCarts.Remove(deleted);
           
