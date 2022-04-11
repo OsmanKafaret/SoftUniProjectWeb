@@ -4,14 +4,16 @@ using EnduroStore.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace EnduroStore.Data.Migrations
 {
     [DbContext(typeof(EnduroStoreDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220411073540_updatingshoppingcart3")]
+    partial class updatingshoppingcart3
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -70,6 +72,9 @@ namespace EnduroStore.Data.Migrations
                     b.Property<decimal>("Price")
                         .HasColumnType("decimal(18,2)");
 
+                    b.Property<string>("ShoppingCartUserId")
+                        .HasColumnType("nvarchar(450)");
+
                     b.Property<string>("Size")
                         .HasColumnType("nvarchar(max)");
 
@@ -80,27 +85,17 @@ namespace EnduroStore.Data.Migrations
 
                     b.HasIndex("CategoryId");
 
+                    b.HasIndex("ShoppingCartUserId");
+
                     b.ToTable("Products");
                 });
 
             modelBuilder.Entity("EnduroStore.Data.Models.ShoppingCart", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("ProductId")
-                        .HasColumnType("int");
-
                     b.Property<string>("UserId")
                         .HasColumnType("nvarchar(450)");
 
-                    b.HasKey("Id");
-
-                    b.HasIndex("ProductId");
-
-                    b.HasIndex("UserId");
+                    b.HasKey("UserId");
 
                     b.ToTable("ShoppingCarts");
                 });
@@ -316,24 +311,11 @@ namespace EnduroStore.Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("EnduroStore.Data.Models.ShoppingCart", null)
+                        .WithMany("Products")
+                        .HasForeignKey("ShoppingCartUserId");
+
                     b.Navigation("Category");
-                });
-
-            modelBuilder.Entity("EnduroStore.Data.Models.ShoppingCart", b =>
-                {
-                    b.HasOne("EnduroStore.Data.Models.Product", "Product")
-                        .WithMany()
-                        .HasForeignKey("ProductId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("EnduroStore.Data.Models.User", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId");
-
-                    b.Navigation("Product");
-
-                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -388,6 +370,11 @@ namespace EnduroStore.Data.Migrations
                 });
 
             modelBuilder.Entity("EnduroStore.Data.Models.Category", b =>
+                {
+                    b.Navigation("Products");
+                });
+
+            modelBuilder.Entity("EnduroStore.Data.Models.ShoppingCart", b =>
                 {
                     b.Navigation("Products");
                 });

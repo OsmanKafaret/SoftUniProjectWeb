@@ -35,38 +35,42 @@ namespace EnduroStore.Areas.Admin.Controllers
             {
                 foreach (var item in getProducts)
                 {
-                    var product = this.db.Products.Where(x => x.Id == item.ProductId)
-                        .Select(x => new ProductListingViewModel
-                        {
-                            ImageUrl = x.ImageUrl,
-                            Brand = x.Brand,
-                            Model = x.Model,
-                            Price = x.Price,
-                            Id = x.Id
-                        }).FirstOrDefault();
-
-                    products.Add(product);
+                  var product = this.db.Products.Where(x => x.Id == item.ProductId)
+                      .Select(x => new ProductListingViewModel
+                      {
+                          ImageUrl = x.ImageUrl,
+                          Brand = x.Brand,
+                          Model = x.Model,
+                          Price = x.Price,
+                          Id = x.Id
+                      }).FirstOrDefault();
+      
+                  products.Add(product);
                 }
+                return View(products);
             }
 
 
 
-            return View(products);
+            return View();
           
         }
 
         public IActionResult AddToBasket(int id)
         {
 
-            var userId = this.User.Id();
+            var user = this.db.Users.Where(x => x.Id == this.User.Id()).FirstOrDefault();
 
-            var cart = new ShoppingCart
+            var product = this.db.Products.Where(x => x.Id == id).FirstOrDefault();
+
+            var shoppingCart = new ShoppingCart
             {
-                ProductId = id,
-                UserId = userId
+                User = user,
+                Product = product
             };
 
-            this.db.ShoppingCarts.Add(cart);
+
+            this.db.ShoppingCarts.Add(shoppingCart);
           
 
             this.db.SaveChanges();
@@ -76,15 +80,24 @@ namespace EnduroStore.Areas.Admin.Controllers
 
         public IActionResult Delete(int id)
         {
-            var shopItem = this.db.ShoppingCarts.Where(x => x.ProductId == id).FirstOrDefault();
 
-            this.db.ShoppingCarts.Remove(shopItem);
+
+            var shopItem = this.db.ShoppingCarts.Where(x => x.ProductId == id && x.UserId == this.User.Id()).Select(x => x.Id).FirstOrDefault();
+
+            var deleted = this.db.ShoppingCarts.Where(x => x.Id == shopItem).FirstOrDefault();
+
+          
+
+           this.db.ShoppingCarts.Remove(deleted);
+          
 
             this.db.SaveChanges();
 
-            return RedirectToAction("AddToBasket", "ShoppingCart");
+            return RedirectToAction("MyBasket", "ShoppingCart");
 
         }
+
+
 
      
     }
