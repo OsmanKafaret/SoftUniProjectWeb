@@ -10,31 +10,32 @@
 
 @if (Model.Any())
 {
-    <div class="row">
-        @foreach (var item in Model)
-        {
-            <div class="col-md-2">
-                <div class="card mb-4">
-                    <img class="card-img-top" src="@item.ImageUrl" alt="@item.Brand @item.Model">
-                    <div class="card-body text-center">
-                        <h5 class="card-title text-center"> @item.Brand @item.Model</h5>
-                        <div class="price">
+<div class="row">
+    @foreach (var item in Model)
+    {
+        <div class="col-md-2">
+            <div class="card mb-4">
+                <img class="card-img-top" src="@item.ImageUrl" alt="@item.Brand @item.Model">
+                <div class="card-body text-center">
+                    <h5 class="card-title text-center"> @item.Brand @item.Model</h5>
+                    <div class="price">
 
 
-                            <span class="price" style="color: orangered">@item.Price</span>
+                        <span class="price" style="color: orangered">@item.Price</span>
 
-                            @{
-                                totalSum += item.Price;
-                            }
-                        </div>
-                        <a asp-controller="ShoppingCart" asp-area="" asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger">Delete</a>
+                        @{
+                            totalSum += item.Price;
+                        }
                     </div>
+                    <a asp-controller="ShoppingCart" asp-area="" asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger">Delete</a>
                 </div>
             </div>
-        }
-        <h1>@totalSum лв.</h1>
+        </div>
+    }
+    <h1>@totalSum лв.</h1>
+    <a width="300" height="300" asp-controller="ShoppingCart" asp-action="Checkout" asp-area="" style="color:green"><i class="fas fa-shopping-cart"></i> <big>Checkout</big></a>
 
-    </div>
+</div>
 }
 
 

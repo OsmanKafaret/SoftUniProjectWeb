@@ -1,0 +1,27 @@
+﻿@model CheckoutFormModel
+
+<h2>Your Total Sum is: @Model</h2>
+
+<form method="post">
+    <div class="mb-3">
+        <label asp-for="Name">Name</label>
+        <input asp-for="Name" type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+        <span asp-validation-for="Name" class="text-danger"></span>
+    </div>
+    <div class="mb-3">
+        <label asp-for="Surname" for="exampleInputPassword1" class="form-label">Surname</label>
+        <input asp-for="Surname" type="text" class="form-control" id="exampleInputPassword1">
+        <span asp-validation-for="Surname" class="text-danger"></span>
+    </div>
+    <div class="mb-3">
+        <label asp-for="Address" for="exampleInputPassword1" class="form-label">Your Address</label>
+        <input asp-for="Address" type="text" class="form-control" id="exampleInputPassword1">
+        <span asp-validation-for="Address" class="text-danger"></span>
+    </div>
+    <div class="mb-3">
+        <label asp-for="PhoneNumber" for="exampleInputPassword1" class="form-label">Phone number</label>
+        <input asp-for="PhoneNumber" type="text" class="form-control" id="exampleInputPassword1">
+        <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+    </div>
+    <button type="submit" class="btn btn-primary">Submit</button>
+</form>

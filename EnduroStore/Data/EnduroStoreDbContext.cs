@@ -20,6 +20,8 @@ namespace EnduroStore.Data
 
         public DbSet<ShoppingCart> ShoppingCarts { get; set; }
 
+        public DbSet<OrderHistory> OrderHistories { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
 

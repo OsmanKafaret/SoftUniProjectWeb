@@ -20,9 +20,10 @@
                 <div class="d-flex">
                     @if (Model.IsAvialable == "Yes" && Model.UnitsInStock != 0 && User.Identity.IsAuthenticated)
                     {
-                        <div class="mb-2">
-                            <a asp-controller="ShoppingCart" asp-action="AddToBasket" asp-route-id="@Model.Id"  asp-area="" ><i class="fas fa-shopping-cart"></i> Add</a>
-                        </div>
+                    
+                        <a width="300" height="300" asp-controller="ShoppingCart" asp-action="AddToBasket" asp-route-id="@Model.Id" asp-area="" style="color:green"><i class="fas fa-shopping-cart"></i> <big>Add</big></a>
+                       
+                    
                     }
 
                 </div>

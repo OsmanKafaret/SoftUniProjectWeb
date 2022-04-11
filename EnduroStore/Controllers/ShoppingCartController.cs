@@ -9,6 +9,8 @@ using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using EnduroStore.InfraStructure;
+using Microsoft.AspNetCore.Authorization;
+using EnduroStore.Models.ShoppingCart;
 
 namespace EnduroStore.Areas.Admin.Controllers
 {
@@ -25,6 +27,7 @@ namespace EnduroStore.Areas.Admin.Controllers
             this.signInManager = signInManager;
             this.db = db;
         }
+        [Authorize]
         public IActionResult MyBasket() 
         {
             var getProducts = this.db.ShoppingCarts.Where(x => x.UserId == this.User.Id()).ToList();
@@ -55,7 +58,7 @@ namespace EnduroStore.Areas.Admin.Controllers
             return View();
           
         }
-
+        [Authorize]
         public IActionResult AddToBasket(int id)
         {
 
@@ -69,6 +72,8 @@ namespace EnduroStore.Areas.Admin.Controllers
                 Product = product
             };
 
+            product.UnitsInStock -= 1;
+
 
             this.db.ShoppingCarts.Add(shoppingCart);
           
@@ -77,7 +82,61 @@ namespace EnduroStore.Areas.Admin.Controllers
 
             return RedirectToAction("Index", "Home");
         }
+        [Authorize]
+        public IActionResult Checkout()
+        {
+            var totalSum = 0m;
 
+            var userProducs = this.db.ShoppingCarts.Where(x => x.UserId == this.User.Id()).ToList();
+
+            foreach (var item in userProducs)
+            {
+                var product = this.db.Products.Where(x => x.Id == item.ProductId).FirstOrDefault();
+
+                totalSum += product.Price;
+            }
+
+            return View(totalSum);
+        }
+        [Authorize]
+        [HttpPost]
+        public IActionResult Checkout(CheckoutFormModel x)
+        {
+
+            var totalSum = 0m;
+
+            var userProducs = this.db.ShoppingCarts.Where(x => x.UserId == this.User.Id()).ToList();
+
+            foreach (var item in userProducs)
+            {
+                var product = this.db.Products.Where(x => x.Id == item.ProductId).FirstOrDefault();
+
+                totalSum += product.Price;
+            }
+
+            var user = this.db.Users.Where(x => x.Id == this.User.Id()).FirstOrDefault();
+
+            var userOrder = new OrderHistory
+            {
+                Name = x.Name,
+                SurName = x.Surname,
+                TotalPrice = totalSum,
+                PhoneNumber = x.PhoneNumber,
+                Address = x.Address,
+                OrderDate = DateTime.UtcNow,
+                User = user
+            };
+
+            this.db.OrderHistories.Add(userOrder);
+
+            this.db.ShoppingCarts.RemoveRange(userProducs);
+
+            this.db.SaveChanges();
+
+            return RedirectToAction("Index", "Home");
+        }
+
+        [Authorize]
         public IActionResult Delete(int id)
         {
 
@@ -86,7 +145,9 @@ namespace EnduroStore.Areas.Admin.Controllers
 
             var deleted = this.db.ShoppingCarts.Where(x => x.Id == shopItem).FirstOrDefault();
 
-            var somet = "sasas";
+            var product = this.db.Products.Where(x => x.Id == id).FirstOrDefault();
+
+            product.UnitsInStock += 1;
 
            this.db.ShoppingCarts.Remove(deleted);
           
