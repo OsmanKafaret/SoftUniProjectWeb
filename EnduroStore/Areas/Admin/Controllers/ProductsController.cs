@@ -86,6 +86,7 @@ namespace EnduroStore.Areas.Admin.Controllers
             this.db.SaveChanges();
 
             TempData[GlobalMessageKey] = $"Product {product.Brand} {product.Model} is deleted successfully!";
+            var something = "asasasa";
 
             return RedirectToAction($"All", "Products");
         }
