@@ -155,20 +155,20 @@ namespace EnduroStore.Areas.Admin.Controllers
         }
 
        // [Authorize]
-     //  public IActionResult UserOrderHistory()
-     //  {
-     //      var userOrderHistory = this.db.UserOrders.Where(x => x.User.Email == this.User.Identity.Name).Select(x => new OrderHistoryListingModel
-     //      {
-     //          Name = x.Name,
-     //          SurName = x.SurName,
-     //          TotalPrice = x.TotalPrice,
-     //          OrderDate = x.OrderDate,
-     //          PhoneNumber = x.PhoneNumber,
-     //          Address = x.Address
-     //      }).ToList();
-     //
-     //      return View(userOrderHistory);
-     //  }
+       public IActionResult UserOrderHistory()
+       {
+           var userOrderHistory = this.db.UserOrders.Where(x => x.UserId == this.User.Id()).Select(x => new OrderHistoryListingModel
+           {
+               Name = x.Name,
+               SurName = x.SurName,
+               TotalPrice = x.TotalPrice,
+               OrderDate = x.OrderDate,
+               PhoneNumber = x.PhoneNumber,
+               Address = x.Address
+           }).ToList();
+     
+           return View(userOrderHistory);
+       }
 
      
     }

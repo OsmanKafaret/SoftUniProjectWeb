@@ -20,14 +20,14 @@ namespace EnduroStore.Data
 
         public DbSet<ShoppingCart> ShoppingCarts { get; set; }
 
-        public DbSet<UserOrderHistory> UserOrders { get; set; }
+        public DbSet<UserOrder> UserOrders { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
       
             base.OnModelCreating(modelBuilder);
       
-            modelBuilder.Entity<UserOrderHistory>()
+            modelBuilder.Entity<UserOrder>()
                 .HasKey(x => x.Id);
       
         }
