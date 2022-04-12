@@ -106,18 +106,18 @@ namespace EnduroStore.Areas.Admin.Controllers
 
             var user = this.db.Users.Where(x => x.Id == this.User.Id()).FirstOrDefault();
 
-            var userOrder = new OrderHistory
-            {
-                Name = x.Name,
-                SurName = x.Surname,
-                TotalPrice = totalSum,
-                PhoneNumber = x.PhoneNumber,
-                Address = x.Address,
-                OrderDate = DateTime.UtcNow,
-                User = user
-            };
-
-            this.db.OrderHistories.Add(userOrder);
+         //   var userOrder = new OrderHistory
+         //   {
+         //       Name = x.Name,
+         //       SurName = x.Surname,
+         //       TotalPrice = totalSum,
+         //       PhoneNumber = x.PhoneNumber,
+         //       Address = x.Address,
+         //       OrderDate = DateTime.UtcNow,
+         //       User = user
+         //   };
+         //
+         //   this.db.OrderHistories.Add(userOrder);
 
             this.db.ShoppingCarts.RemoveRange(userProducs);
 

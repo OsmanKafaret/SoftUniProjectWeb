@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace EnduroStore.Data.Models
 {
-    public class OrderHistory
+    public class UserOrder
     {
         public int Id { get; set; }
         public int UserId { get; set; }
