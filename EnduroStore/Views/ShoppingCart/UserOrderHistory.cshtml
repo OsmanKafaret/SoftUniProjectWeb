@@ -1,0 +1,36 @@
+﻿@model ICollection<OrderHistoryListingModel>
+
+
+
+@if (!Model.Any())
+{
+    <h1>You do not have orders yet!</h1>
+}
+
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">Name</th>
+            <th scope="col">Surname</th>
+            <th scope="col">Total price</th>
+            <th scope="col">Order date</th>
+            <th scope="col">Phone number</th>
+            <th scope="col">Address</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+
+            @foreach (var item in Model)
+            {
+                <td>@item.Name</td>
+                <td>@item.SurName</td>
+                <td>@item.TotalPrice</td>
+                <td>@item.OrderDate</td>
+                <td>@item.PhoneNumber</td>
+                <td>@item.Address</td>
+            }
+        </tr>
+       
+    </tbody>
+</table>

@@ -106,18 +106,18 @@ namespace EnduroStore.Areas.Admin.Controllers
 
             var user = this.db.Users.Where(x => x.Id == this.User.Id()).FirstOrDefault();
 
-         //   var userOrder = new OrderHistory
-         //   {
-         //       Name = x.Name,
-         //       SurName = x.Surname,
-         //       TotalPrice = totalSum,
-         //       PhoneNumber = x.PhoneNumber,
-         //       Address = x.Address,
-         //       OrderDate = DateTime.UtcNow,
-         //       User = user
-         //   };
+         //  var userOrder = new UserOrder
+         //  {
+         //      Name = x.Name,
+         //      SurName = x.Surname,
+         //      TotalPrice = totalSum,
+         //      PhoneNumber = x.PhoneNumber,
+         //      Address = x.Address,
+         //      OrderDate = DateTime.UtcNow,
+         //      User = user
+         //  };
          //
-         //   this.db.OrderHistories.Add(userOrder);
+         //  this.db.UserOrders.Add(userOrder);
 
             this.db.ShoppingCarts.RemoveRange(userProducs);
 
@@ -154,7 +154,21 @@ namespace EnduroStore.Areas.Admin.Controllers
 
         }
 
-
+       // [Authorize]
+     //  public IActionResult UserOrderHistory()
+     //  {
+     //      var userOrderHistory = this.db.UserOrders.Where(x => x.User.Email == this.User.Identity.Name).Select(x => new OrderHistoryListingModel
+     //      {
+     //          Name = x.Name,
+     //          SurName = x.SurName,
+     //          TotalPrice = x.TotalPrice,
+     //          OrderDate = x.OrderDate,
+     //          PhoneNumber = x.PhoneNumber,
+     //          Address = x.Address
+     //      }).ToList();
+     //
+     //      return View(userOrderHistory);
+     //  }
 
      
     }
