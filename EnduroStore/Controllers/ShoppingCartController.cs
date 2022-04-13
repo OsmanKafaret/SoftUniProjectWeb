@@ -105,19 +105,19 @@ namespace EnduroStore.Areas.Admin.Controllers
             }
 
             var user = this.db.Users.Where(x => x.Id == this.User.Id()).FirstOrDefault();
-
-         //  var userOrder = new UserOrder
-         //  {
-         //      Name = x.Name,
-         //      SurName = x.Surname,
-         //      TotalPrice = totalSum,
-         //      PhoneNumber = x.PhoneNumber,
-         //      Address = x.Address,
-         //      OrderDate = DateTime.UtcNow,
-         //      User = user
-         //  };
-         //
-         //  this.db.UserOrders.Add(userOrder);
+          
+           var userOrder = new UserOrder
+           {
+               Name = x.Name,
+               SurName = x.Surname,
+               TotalPrice = totalSum,
+               PhoneNumber = x.PhoneNumber,
+               Address = x.Address,
+               OrderDate = DateTime.UtcNow,
+               User = user
+           };
+          
+           this.db.UserOrders.Add(userOrder);
 
             this.db.ShoppingCarts.RemoveRange(userProducs);
 
@@ -166,7 +166,7 @@ namespace EnduroStore.Areas.Admin.Controllers
                PhoneNumber = x.PhoneNumber,
                Address = x.Address
            }).ToList();
-     
+        
            return View(userOrderHistory);
        }
 

@@ -20,10 +20,6 @@
 
 
                     <a asp-controller="Products" asp-action="Details" asp-route-id="@item.Id" asp-route-information="@Model" class="btn btn-primary">View</a>
-                    @if (item.IsAvialable == "Yes" && item.UnitsInStock != 0 && User.Identity.IsAuthenticated)
-                    {
-                        <a class="btn" style="background-color: forestgreen">Buy</a>
-                    }
 
                     @if (item.IsAvialable == "No" || item.UnitsInStock == 0)
                     {

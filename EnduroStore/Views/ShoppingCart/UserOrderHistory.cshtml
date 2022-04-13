@@ -1,6 +1,7 @@
 ﻿@model ICollection<OrderHistoryListingModel>
-
-
+@{
+    ViewData["Title"] = "Order histories";
+}
 
 @if (!Model.Any())
 {
@@ -10,6 +11,7 @@
 <table class="table">
     <thead>
         <tr>
+            <th scope="col">#</th>
             <th scope="col">Name</th>
             <th scope="col">Surname</th>
             <th scope="col">Total price</th>
@@ -19,18 +21,21 @@
         </tr>
     </thead>
     <tbody>
-        <tr>
 
-            @foreach (var item in Model)
-            {
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <th scope="row">.</th>
                 <td>@item.Name</td>
                 <td>@item.SurName</td>
                 <td>@item.TotalPrice</td>
                 <td>@item.OrderDate</td>
                 <td>@item.PhoneNumber</td>
                 <td>@item.Address</td>
-            }
-        </tr>
-       
+            </tr>
+        }
+
+
     </tbody>
 </table>

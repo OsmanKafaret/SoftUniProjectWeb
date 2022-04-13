@@ -151,6 +151,8 @@ namespace EnduroStore.Areas.Admin.Controllers
                 return View(product);
             }
 
+            var redirectedAction = this.db.Products.Where(x => x.Id == id).FirstOrDefault().UnitsInStock == 0 ? "FinishedProducts" : "All";
+
             var editedProduct = this.db.Products.Find(id);
 
             editedProduct.Brand = product.Brand;
@@ -169,7 +171,7 @@ namespace EnduroStore.Areas.Admin.Controllers
 
            
 
-            return RedirectToAction($"All", "Products");
+            return RedirectToAction(redirectedAction, "Products");
         }
 
         private IEnumerable<ProductCategoriesViewModel> GetProductCategories()
