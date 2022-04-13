@@ -53,6 +53,8 @@ namespace EnduroStore.InfraStructure
                 new Category { Name = "Engine" },
                 new Category{Name = "Glasses"},
                  new Category{Name = "Pants"}
+                
+
 
             });
 

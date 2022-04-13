@@ -19,7 +19,7 @@ namespace EnduroStore.Controllers
     {
         private readonly IProductService products;
         private readonly EnduroStoreDbContext db;
-       
+
 
         public ProductsController(EnduroStoreDbContext db, IProductService products)
         {
@@ -27,7 +27,7 @@ namespace EnduroStore.Controllers
             this.products = products;
         }
 
-        public IActionResult Helmets([FromQuery] AllProductsQueryModel query) 
+        public IActionResult Helmets([FromQuery] AllProductsQueryModel query)
         {
             var queryResult = this.products.GetProducts(query.Brand, query.SearchTerm, query.Sorting, query.CurrentPage, AllProductsQueryModel.ProductsPerPage, "Helmets");
 
@@ -38,7 +38,7 @@ namespace EnduroStore.Controllers
 
             return View(query);
         }
-        public IActionResult All([FromQuery]AllProductsQueryModel query)
+        public IActionResult All([FromQuery] AllProductsQueryModel query)
         {
             var queryResult = this.products.GetProducts(query.Brand, query.SearchTerm, query.Sorting, query.CurrentPage, AllProductsQueryModel.ProductsPerPage);
 
@@ -63,7 +63,7 @@ namespace EnduroStore.Controllers
             return View(query);
         }
 
-        public IActionResult Glasses([FromQuery]AllProductsQueryModel query)
+        public IActionResult Glasses([FromQuery] AllProductsQueryModel query)
         {
             var queryResult = this.products.GetProducts(query.Brand, query.SearchTerm, query.Sorting, query.CurrentPage, AllProductsQueryModel.ProductsPerPage, "Glasses");
 

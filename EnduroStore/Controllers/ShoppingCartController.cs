@@ -36,19 +36,19 @@ namespace EnduroStore.Areas.Admin.Controllers
         {
             var getProducts = this.db.ShoppingCarts.Where(x => x.UserId == this.User.Id()).ToList();
 
-            var products = new List<ProductListingViewModel>();
+            var products = new List<MyBasketListingModel>();
 
            
                 foreach (var item in getProducts)
                 {
                   var product = this.db.Products.Where(x => x.Id == item.ProductId)
-                      .Select(x => new ProductListingViewModel
+                      .Select(x => new MyBasketListingModel
                       {
-                          ImageUrl = x.ImageUrl,
                           Brand = x.Brand,
                           Model = x.Model,
                           Price = x.Price,
-                          Id = x.Id
+                          Id = x.Id,
+                          Size = x.Size
                       }).FirstOrDefault();
       
                   products.Add(product);
@@ -58,12 +58,15 @@ namespace EnduroStore.Areas.Admin.Controllers
           
         }
         [Authorize]
-        public IActionResult AddToBasket(int id)
+        
+        public IActionResult AddToBasket(int id, string ADISize)
         {
 
             var user = this.db.Users.Where(x => x.Id == this.User.Id()).FirstOrDefault();
 
             var product = this.db.Products.Where(x => x.Id == id).FirstOrDefault();
+
+            product.Size = ADISize;
 
             var shoppingCart = new ShoppingCart
             {
@@ -75,7 +78,6 @@ namespace EnduroStore.Areas.Admin.Controllers
 
 
             this.db.ShoppingCarts.Add(shoppingCart);
-          
 
             this.db.SaveChanges();
 
@@ -84,8 +86,6 @@ namespace EnduroStore.Areas.Admin.Controllers
         [Authorize]
         public IActionResult Checkout()
         {
-      
-
             return View();
         }
         [Authorize]
