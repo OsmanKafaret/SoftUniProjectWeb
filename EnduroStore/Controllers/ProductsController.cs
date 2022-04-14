@@ -2,6 +2,7 @@
 using EnduroStore.Data.Models;
 using EnduroStore.InfraStructure;
 using EnduroStore.Models.Products;
+using EnduroStore.Models.ShoppingCart;
 using EnduroStore.Services.Products;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
@@ -93,13 +94,34 @@ namespace EnduroStore.Controllers
             return View(product);
         }
 
-        private IEnumerable<ProductCategoriesViewModel> GetProductCategories()
-        => this.db.Categories.Select(x => new ProductCategoriesViewModel
+        [HttpPost]
+        [Authorize]
+        public IActionResult Details(DetailsViewModel model)
         {
-            Id = x.Id,
-            Name = x.Name
-        }).ToList();
+            var product = this.db.Products.Where(x => x.Id == model.Id).FirstOrDefault();
 
+            var user = this.db.Users.Where(x => x.Id == this.User.Id()).FirstOrDefault();
+
+            product.Size = model.Size;
+           
+
+            var shoppingCart = new ShoppingCart
+            {
+                User = user,
+                Product = product
+            };
+
+            product.UnitsInStock -= 1;
+
+
+            this.db.ShoppingCarts.Add(shoppingCart);
+
+            TempData[GlobalMessageKey] = $"Product {product.Brand} {product.Model} was added to your basket successfully!";
+
+            this.db.SaveChanges();
+
+            return RedirectToAction("Index", "Home");
+        }
 
     }
 }

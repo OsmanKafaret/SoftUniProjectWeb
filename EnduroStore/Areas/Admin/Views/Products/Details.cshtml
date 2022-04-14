@@ -8,33 +8,41 @@
     var Size = string.Empty;
 }
 
+<form method="post">
+    <section class="py-5">
+        <div class="container px-4 px-lg-5 my-5">
+            <div class="row gx-4 gx-lg-5 align-items-center">
+                <div class="col-md-6"><img class="card-img-top mb-5 mb-md-0" src="@Model.ImageUrl" /></div>
+                <div class="col-md-6">
+                    <h1 class="display-5 fw-bolder">@Model.Brand @Model.Model</h1>
+                    <div class="fs-5 mb-5">
+                        <span class="text-decoration-line-through" style="display:none">@Model.Price</span>
+                        <span>@Model.Price лв.</span>
+                    </div>
+                    <p class="lead">@Model.Description</p>
 
-<section class="py-5">
-    <div class="container px-4 px-lg-5 my-5">
-        <div class="row gx-4 gx-lg-5 align-items-center">
-            <div class="col-md-6"><img class="card-img-top mb-5 mb-md-0" src="@Model.ImageUrl" /></div>
-            <div class="col-md-6">
-                <h1 class="display-5 fw-bolder">@Model.Brand @Model.Model</h1>
-                <div class="fs-5 mb-5">
-                    <span class="text-decoration-line-through" style="display:none">@Model.Price</span>
-                    <span>@Model.Price лв.</span>
-                </div>
-                <p class="lead">@Model.Description</p>
+                    <div class="d-flex">
+                        @if (Model.IsAvialable == "Yes" && Model.UnitsInStock != 0 && User.Identity.IsAuthenticated)
+                        {
+                            <select asp-for="Size" class="form-select" aria-label="Default select example">
+                                <option value="S" selected>S</option>
+                                <option value="M">M</option>
+                                <option value="L">L</option>
 
-                <div class="d-flex">
-                    @if (Model.IsAvialable == "Yes" && Model.UnitsInStock != 0 && User.Identity.IsAuthenticated)
-                    {
+                            </select>
+
+                            <button type="submit" class="btn btn-primary">Add</button>
 
 
-
-                        <a width="300" height="300" asp-controller="ShoppingCart" asp-action="AddToBasket" asp-route-id="@Model.Id" asp-area="" style="color:green"><i class="fas fa-shopping-cart"></i> <big>Add</big></a>
+                            //  <a width="300" height="300" asp-controller="ShoppingCart" asp-action="AddToBasket" asp-route-id="@Model.Id" asp-area="" style="color:green"><i class="fas fa-shopping-cart"></i> <big>Add</big></a>
 
 
 
-                    }
+                        }
 
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-</section>
+    </section>
+</form>

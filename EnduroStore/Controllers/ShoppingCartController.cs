@@ -23,7 +23,7 @@ namespace EnduroStore.Areas.Admin.Controllers
         private readonly RoleManager<IdentityRole> roleManager;
 
 
-        public int GlobalMessageKey { get; private set; }
+       // public int GlobalMessageKey { get; private set; }
 
         public ShoppingCartController(SignInManager<User> signInManager, UserManager<User> userManager, EnduroStoreDbContext db)
         {
@@ -57,32 +57,34 @@ namespace EnduroStore.Areas.Admin.Controllers
            
           
         }
-        [Authorize]
+       
         
-        public IActionResult AddToBasket(int id, string ADISize)
-        {
-
-            var user = this.db.Users.Where(x => x.Id == this.User.Id()).FirstOrDefault();
-
-            var product = this.db.Products.Where(x => x.Id == id).FirstOrDefault();
-
-            product.Size = ADISize;
-
-            var shoppingCart = new ShoppingCart
-            {
-                User = user,
-                Product = product
-            };
-
-            product.UnitsInStock -= 1;
-
-
-            this.db.ShoppingCarts.Add(shoppingCart);
-
-            this.db.SaveChanges();
-
-            return RedirectToAction("Index", "Home");
-        }
+      //  public IActionResult AddToBasket(int id)
+      //  {
+      //
+      //      var user = this.db.Users.Where(x => x.Id == this.User.Id()).FirstOrDefault();
+      //
+      //      var product = this.db.Products.Where(x => x.Id == id).FirstOrDefault();
+      //
+      //      product.Size = ADISize;
+      //
+      //      var shoppingCart = new ShoppingCart
+      //      {
+      //          User = user,
+      //          Product = product
+      //      };
+      //
+      //      product.UnitsInStock -= 1;
+      //
+      //
+      //      this.db.ShoppingCarts.Add(shoppingCart);
+      //
+      //    
+      //
+      //      this.db.SaveChanges();
+      //
+      //      return RedirectToAction("Index", "Home");
+      //  }
         [Authorize]
         public IActionResult Checkout()
         {
@@ -128,6 +130,7 @@ namespace EnduroStore.Areas.Admin.Controllers
             // TempData[GlobalMessageKey] = "asasa";
             // TempData[GlobalMessageKey] = "asasa";
             // TempData[GlobalMessageKey] = "asasa";
+            TempData[GlobalMessageKey] = "Your order was approved! You can check on Profile/Order histories your order details.";
 
             return RedirectToAction("Index", "Home");
         }
@@ -149,12 +152,13 @@ namespace EnduroStore.Areas.Admin.Controllers
           
 
             this.db.SaveChanges();
+            TempData[GlobalMessageKey] = "The product deleted successfully!";
 
             return RedirectToAction("MyBasket", "ShoppingCart");
 
         }
 
-       // [Authorize]
+        [Authorize]
        public IActionResult UserOrderHistory()
        {
            var userOrderHistory = this.db.UserOrders.Where(x => x.UserId == this.User.Id()).Select(x => new OrderHistoryListingModel
