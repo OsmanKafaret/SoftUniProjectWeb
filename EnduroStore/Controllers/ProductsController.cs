@@ -78,18 +78,7 @@ namespace EnduroStore.Controllers
 
         public IActionResult Details(int id)
         {
-            var product = this.db.Products.Where(x => x.Id == id).Select(x => new DetailsViewModel
-            {
-                Id = x.Id,
-                ImageUrl = x.ImageUrl,
-                Brand = x.Brand,
-                Model = x.Model,
-                Price = x.Price,
-                Description = x.Description,
-                IsAvialable = x.IsAvialable == true ? "Yes" : "No",
-                UnitsInStock = x.UnitsInStock,
-                Size = x.Size
-            }).FirstOrDefault();
+            var product = this.products.Details(id);
 
             return View(product);
         }

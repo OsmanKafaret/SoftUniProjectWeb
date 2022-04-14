@@ -2,6 +2,7 @@
 using EnduroStore.Data.Models;
 using EnduroStore.Models;
 using EnduroStore.Models.Products;
+using EnduroStore.Services.Products;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
@@ -14,41 +15,32 @@ namespace EnduroStore.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly EnduroStoreDbContext db;
+        private readonly IProductService products;
 
-        public HomeController(EnduroStoreDbContext db)
+        public HomeController(IProductService products)
         {
-            this.db = db;
+
+            this.products = products;
         }
 
 
 
-        public IActionResult Index()
+        public IActionResult Index([FromQuery] AllProductsQueryModel query)
         {
-            var product = this.db.Products
-                .Where(x => x.Category.Name == "Boots")
-                .OrderByDescending(x => x.Id)
-                .Select(x => new ProductListingViewModel
-                {
-                    ImageUrl = x.ImageUrl,
-                    Brand = x.Brand,
-                    Model = x.Model,
-                    Price = x.Price,
-                    UnitsInStock = x.UnitsInStock,
-                    IsAvialable = x.IsAvialable == true ? "Yes" : "No",
-                    Id = x.Id
-                })
-                .Take(6)
-                .ToList();
-            return View(product);
+            var queryResult = this.products.GetProducts(query.Brand, query.SearchTerm, query.Sorting, query.CurrentPage, AllProductsQueryModel.ProductsPerPage);
+
+            var productBrands = this.products.AllBrands();
+
+            query.Brands = productBrands;
+            query.Products = queryResult.Products;
+
+            return View(query);
         }
 
+
+
+        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
+        public IActionResult Error() => View();
        
-
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]  
-        public IActionResult Error()
-        {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
-        }
     }
 }

@@ -18,5 +18,9 @@ namespace EnduroStore.Services.Products
           string category = null, bool isFinished = false);
 
         IEnumerable<string> AllBrands(string category = null);
+
+        DetailsViewModel Details(int id);
+
+        int Create(string brand, string model, string imageUrl, decimal price, string description, bool isAvialable, int unitsInStock, int categoryId);
     }
 }

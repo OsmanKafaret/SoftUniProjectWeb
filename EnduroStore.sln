@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.32228.343
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EnduroStore", "EnduroStore\EnduroStore.csproj", "{A80DEF8B-7365-449E-B5F3-C31BF45AB552}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EnduroStore", "EnduroStore\EnduroStore.csproj", "{A80DEF8B-7365-449E-B5F3-C31BF45AB552}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EnduroStore.Test", "EnduroStore.Test\EnduroStore.Test.csproj", "{F9FA4081-7743-45BE-980D-71389C62501C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{A80DEF8B-7365-449E-B5F3-C31BF45AB552}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A80DEF8B-7365-449E-B5F3-C31BF45AB552}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A80DEF8B-7365-449E-B5F3-C31BF45AB552}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F9FA4081-7743-45BE-980D-71389C62501C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F9FA4081-7743-45BE-980D-71389C62501C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F9FA4081-7743-45BE-980D-71389C62501C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F9FA4081-7743-45BE-980D-71389C62501C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

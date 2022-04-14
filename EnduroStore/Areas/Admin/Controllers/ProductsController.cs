@@ -61,18 +61,7 @@ namespace EnduroStore.Areas.Admin.Controllers
 
         public IActionResult Details(int id)
         {
-            var product = this.db.Products.Where(x => x.Id == id).Select(x => new DetailsViewModel
-            {
-                Id = x.Id,
-                ImageUrl = x.ImageUrl,
-                Brand = x.Brand,
-                Model = x.Model,
-                Price = x.Price,
-                Description = x.Description,
-                IsAvialable = x.IsAvialable == true ? "Yes" : "No",
-                UnitsInStock = x.UnitsInStock,
-                Size = x.Size
-            }).FirstOrDefault();
+            var product = this.products.Details(id);
 
             return View(product);
         }
@@ -100,26 +89,18 @@ namespace EnduroStore.Areas.Admin.Controllers
                 this.ModelState.AddModelError(nameof(item.CategoryId), "Category does not exists");
             }
 
+            bool isAvialable = item.IsAvialable == "Yes" ? true : false;
+
             if (!ModelState.IsValid)
             {
                 item.Categories = this.GetProductCategories();
                 return View(item);
             }
 
-            var product = new Product
-            {
-                Brand = item.Brand,
-                Model = item.Model,
-                ImageUrl = item.ImageUrl,
-                Price = item.Price,
-                Description = item.Description,
-                IsAvialable = item.IsAvialable == "Yes" ? true : false,
-                UnitsInStock = item.UnitsInStock,
-                CategoryId = item.CategoryId
-            };
+            var product = this.products.Create(item.Brand, item.Model, item.ImageUrl, item.Price,
+                 item.Description, isAvialable, item.UnitsInStock, item.CategoryId);
 
-            this.db.Products.Add(product);
-            this.db.SaveChanges();
+            TempData[GlobalMessageKey] = $"Product {item.Brand} {item.Model} was added successfully!";
 
             return RedirectToAction($"All", "Products");
         }

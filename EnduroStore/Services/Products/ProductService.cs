@@ -81,6 +81,26 @@ namespace EnduroStore.Services.Products
             return query;
         }
 
+        public DetailsViewModel Details(int id)
+        =>
+            this.data.Products.Where(x => x.Id == id)
+                .Select(x => new DetailsViewModel
+                {
+                    Id = x.Id,
+                    ImageUrl = x.ImageUrl,
+                    Price = x.Price,
+                    Brand = x.Brand,
+                    Model = x.Model,
+                    Size = x.Size,
+                    Description = x.Description,
+                    IsAvialable = x.IsAvialable == true ? "Yes" : "No",
+                    UnitsInStock = x.UnitsInStock
+                }).FirstOrDefault();
+
+
+        
+        
+
         private IEnumerable<ProductServiceModel> GetProducts(IQueryable<Product> productQuery)
         => productQuery
             .Select(x => new ProductServiceModel
@@ -96,6 +116,24 @@ namespace EnduroStore.Services.Products
             })
             .ToList();
 
-       
+        public int Create(string brand, string model, string imageUrl, decimal price, string description, bool isAvialable, int unitsInStock, int categoryId)
+        {
+            var product = new Product
+            {
+                Brand = brand,
+                Model = model,
+                Description = description,
+                ImageUrl = imageUrl,
+                CategoryId = categoryId,
+                Price = price,
+                IsAvialable = isAvialable,
+                UnitsInStock = unitsInStock
+            };
+
+            this.data.Products.Add(product);
+            this.data.SaveChanges();
+
+            return product.Id;
+        }
     }
 }
