@@ -1,4 +1,6 @@
-﻿using System;
+﻿using EnduroStore.Data;
+using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,5 +10,16 @@ namespace EnduroStore.Test.Mocks
 {
     public static class DatabaseMock
     {
+        public static EnduroStoreDbContext Instance
+        {
+            get
+            {
+                var dbContextOptions = new DbContextOptionsBuilder<EnduroStoreDbContext>()
+                .UseInMemoryDatabase(Guid.NewGuid().ToString())
+                .Options;
+
+                return new EnduroStoreDbContext(dbContextOptions);
+            }
+        }
     }
 }

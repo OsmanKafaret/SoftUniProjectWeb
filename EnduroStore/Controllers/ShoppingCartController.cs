@@ -132,7 +132,7 @@ namespace EnduroStore.Areas.Admin.Controllers
             // TempData[GlobalMessageKey] = "asasa";
             TempData[GlobalMessageKey] = "Your order was approved! You can check on Profile/Order histories your order details.";
 
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("UserOrderHistory", "ShoppingCart");
         }
 
         [Authorize]

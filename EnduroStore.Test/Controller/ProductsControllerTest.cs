@@ -8,11 +8,20 @@ namespace EnduroStore.Test.Controller
 {
     using Xunit;
     using Microsoft.AspNetCore.Mvc.Testing;
-    public class ProductsControllerSystemTest : IClassFixture<WebApplicationFactory<Startup>>
+    using EnduroStore.Test.Mocks;
+    using EnduroStore.Models.Products;
+    using Microsoft.AspNetCore.Mvc;
+    using EnduroStore.Services.Products;
+    using Microsoft.EntityFrameworkCore;
+    using EnduroStore.Data;
+    using EnduroStore.Data.Models;
+    using MongoDB.Driver;
+
+    public class ProductsControllerTest : IClassFixture<WebApplicationFactory<Startup>>
     {
         private readonly WebApplicationFactory<Startup> factory;
 
-        public ProductsControllerSystemTest(WebApplicationFactory<Startup> factory)
+        public ProductsControllerTest(WebApplicationFactory<Startup> factory)
         {
             this.factory = factory;
         }
@@ -44,6 +53,5 @@ namespace EnduroStore.Test.Controller
 
             Assert.True(result.IsSuccessStatusCode);
         }
-
     }
 }

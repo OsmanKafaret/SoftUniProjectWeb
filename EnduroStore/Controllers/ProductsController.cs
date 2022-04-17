@@ -107,9 +107,13 @@ namespace EnduroStore.Controllers
 
             TempData[GlobalMessageKey] = $"Product {product.Brand} {product.Model} was added to your basket successfully!";
 
+            var redirectAction = this.db.Categories.Where(x => x.Id == product.CategoryId).Select(x => x.Name).FirstOrDefault();
+
+            var redirectController = "Products";
+
             this.db.SaveChanges();
 
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction(redirectAction, redirectController);
         }
 
     }

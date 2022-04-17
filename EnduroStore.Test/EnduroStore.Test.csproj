@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
@@ -7,16 +7,16 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.Mvc.Testing" Version="5.0.8" />
-    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.9.4" />
-    <PackageReference Include="Microsoft.VisualStudio.Services.Client" Version="16.170.0" />
-    <PackageReference Include="Moq" Version="4.17.2" />
-    <PackageReference Include="xunit" Version="2.4.1" />
-    <PackageReference Include="xunit.runner.visualstudio" Version="2.4.3">
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-      <PrivateAssets>all</PrivateAssets>
-    </PackageReference>
-    <PackageReference Include="coverlet.collector" Version="3.0.2">
+	  <PackageReference Include="Microsoft.AspNet.Identity.Core" Version="2.2.3" />
+	  <PackageReference Include="Microsoft.AspNetCore.Mvc.Testing" Version="5.0.8" />
+	  <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="5.0.8" />
+	  <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.11.0" />
+	  <PackageReference Include="MongoDB.Driver" Version="2.15.0" />
+	  <PackageReference Include="Moq" Version="4.17.2" />
+	  <PackageReference Include="MyTested.AspNetCore.Mvc.Universe" Version="5.0.0" />
+	  <PackageReference Include="xunit" Version="2.4.1" />
+	  <PackageReference Include="Microsoft.VisualStudio.Services.Client" Version="16.170.0" />
+	  <PackageReference Include="xunit.runner.visualstudio" Version="2.4.3">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
